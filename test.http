@@ -24,3 +24,12 @@ Content-Type: application/json
   "optionD": "To act as an operating system",
   "correctOption": "B"
 }
+
+###
+PUT http://localhost:8080/api/attempts/100/answers
+Content-Type: application/json
+
+{
+  "questionId": 1,
+  "selectedOption": "A"
+}

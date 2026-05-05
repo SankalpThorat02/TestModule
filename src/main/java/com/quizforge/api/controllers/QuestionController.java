@@ -7,6 +7,7 @@ import com.quizforge.api.dtos.AddQuestionRequest;
 import com.quizforge.api.services.QuestionService;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/exams")
 public class QuestionController {
