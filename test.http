@@ -11,3 +11,16 @@ GET http://localhost:8080/api/exams/1
 
 ###
 GET http://localhost:8080/api/exams
+
+###
+POST http://localhost:8080/api/exams/3/questions
+Content-Type: application/json
+
+{
+  "questionText": "What is the primary purpose of Spring Boot?",
+  "optionA": "To style web pages",
+  "optionB": "To create stand-alone Spring applications easily",
+  "optionC": "To manage databases automatically",
+  "optionD": "To act as an operating system",
+  "correctOption": "B"
+}
