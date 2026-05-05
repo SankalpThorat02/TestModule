@@ -7,6 +7,7 @@ import com.quizforge.api.services.ExamService;
 import com.quizforge.api.dtos.CreateExamRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,6 +29,12 @@ public class ExamController {
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getExamById(@PathVariable Integer id) {
         Map<String, Object> res = examService.getExamById(id);
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Map<String, Object>>> getAllExams() {
+        List<Map<String, Object>> res = examService.getAllExams();
         return ResponseEntity.ok(res);
     }
 }

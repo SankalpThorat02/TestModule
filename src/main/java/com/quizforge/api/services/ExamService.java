@@ -6,7 +6,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.StoredProcedureQuery;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -62,6 +64,30 @@ public class ExamService {
         response.put("message", query.getOutputParameterValue("out_message"));
 
         return response;
+    }
 
+    public List<Map<String, Object>> getAllExams() {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("get_all_exams");
+
+        query.registerStoredProcedureParameter("out_cursor", void.class, ParameterMode.REF_CURSOR);
+        query.registerStoredProcedureParameter("out_message", String.class, ParameterMode.OUT);
+
+        query.execute();
+
+        List<Object[]> rows = query.getResultList();
+        List<Map<String, Object>> cleanList = new ArrayList<>();
+
+        for(Object[] row : rows) {
+            Map<String, Object> examMap = new HashMap<>();
+
+            examMap.put("examId", ((Number) row[0]).longValue());
+            examMap.put("title", (String) row[1]);
+            examMap.put("durationMinutes", ((Number) row[2]).longValue());
+            examMap.put("status", (String) row[3]);
+
+            cleanList.add(examMap);
+        }
+
+        return cleanList;
     }
 }

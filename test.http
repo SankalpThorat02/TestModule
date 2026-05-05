@@ -2,9 +2,12 @@ POST http://localhost:8080/api/exams
 Content-Type: application/json
 
 {
-  "title": "Test 2",
-  "duration":60
+  "title": "Test 4",
+  "duration":100
 }
 
 ###
 GET http://localhost:8080/api/exams/1
+
+###
+GET http://localhost:8080/api/exams
