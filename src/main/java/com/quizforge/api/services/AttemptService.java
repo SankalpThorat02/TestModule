@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Parameter;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.StoredProcedureQuery;
+import org.springframework.scheduling.support.SimpleTriggerContext;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -36,5 +37,23 @@ public class AttemptService {
         res.put("message", message);
 
         return res;
+    }
+
+    public Map<String, Object> submitAnswer(Long attemptId) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("submit_exam_and_grade");
+
+        query.registerStoredProcedureParameter("in_attempt_id", Long.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("out_score", Integer.class, ParameterMode.OUT);
+        query.registerStoredProcedureParameter("out_message", String.class, ParameterMode.OUT);
+
+        query.setParameter("in_attempt_id", attemptId);
+
+        query.execute();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("score", query.getOutputParameterValue("out_score"));
+        response.put("message", query.getOutputParameterValue("out_message"));
+
+        return response;
     }
 }

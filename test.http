@@ -33,3 +33,6 @@ Content-Type: application/json
   "questionId": 1,
   "selectedOption": "A"
 }
+
+###
+POST http://localhost:8080/api/attempts/100/submit

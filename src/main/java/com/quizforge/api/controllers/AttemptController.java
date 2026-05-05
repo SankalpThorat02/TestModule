@@ -21,4 +21,10 @@ public class AttemptController {
         Map<String, Object> res = attemptService.saveAnswer(attemptId, request);
         return ResponseEntity.ok(res);
     }
+
+    @PostMapping("/{attemptId}/submit")
+    public ResponseEntity<Map<String, Object>> submitTest(@PathVariable Long attemptId){
+        Map<String, Object> res = attemptService.submitAnswer(attemptId);
+        return ResponseEntity.ok(res);
+    }
 }
