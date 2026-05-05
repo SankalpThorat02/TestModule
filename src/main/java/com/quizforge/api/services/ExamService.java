@@ -41,4 +41,27 @@ public class ExamService {
 
         return response;
     }
+
+    public Map<String, Object> getExamById(Integer Id) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("get_exam_by_id");
+
+        query.registerStoredProcedureParameter("in_exam_id", Integer.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("out_title", String.class, ParameterMode.OUT);
+        query.registerStoredProcedureParameter("out_duration", Integer.class, ParameterMode.OUT);
+        query.registerStoredProcedureParameter("out_status", String.class, ParameterMode.OUT);
+        query.registerStoredProcedureParameter("out_message", String.class, ParameterMode.OUT);
+
+        query.setParameter("in_exam_id", Id);
+
+        query.execute();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("title", query.getOutputParameterValue("out_title"));
+        response.put("duration", query.getOutputParameterValue("out_duration"));
+        response.put("status", query.getOutputParameterValue("out_status"));
+        response.put("message", query.getOutputParameterValue("out_message"));
+
+        return response;
+
+    }
 }
