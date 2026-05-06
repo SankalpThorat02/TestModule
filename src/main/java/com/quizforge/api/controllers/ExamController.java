@@ -38,4 +38,10 @@ public class ExamController {
         List<Map<String, Object>> res = examService.getAllExams();
         return ResponseEntity.ok(res);
     }
+
+    @GetMapping("/{examId}/leaderboard")
+    public ResponseEntity<List<Map<String, Object>>> getLeaderboard(@PathVariable Long examId) {
+        List<Map<String, Object>> res = examService.getLeaderboard(examId);
+        return ResponseEntity.ok(res);
+    }
 }

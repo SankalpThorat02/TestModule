@@ -90,4 +90,31 @@ public class ExamService {
 
         return cleanList;
     }
+
+    public List<Map<String, Object>> getLeaderboard(Long examId) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("sankalp_leaderboard");
+
+        query.registerStoredProcedureParameter("in_exam_id", Long.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("out_cursor", void.class, ParameterMode.REF_CURSOR);
+        query.registerStoredProcedureParameter("out_message", String.class, ParameterMode.OUT);
+
+        query.setParameter("in_exam_id", examId);
+
+        query.execute();
+
+        List<Object[]> rows = query.getResultList();
+        List<Map<String, Object>> cleanList = new ArrayList<>();
+
+        for(Object[] row : rows) {
+            Map<String, Object> res = new HashMap<>();
+
+            res.put("userId", ((Number) row[0]).longValue());
+            res.put("status", row[1]);
+            res.put("score", ((Number) row[2]).intValue());
+
+            cleanList.add(res);
+        }
+
+        return cleanList;
+    }
 }
