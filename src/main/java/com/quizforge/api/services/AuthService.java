@@ -35,8 +35,6 @@ public class AuthService {
         String role = (String) query.getOutputParameterValue("out_role");
         String name = (String) query.getOutputParameterValue("out_name");
 
-        System.out.println("DEBUG: Oracle returned Role: [" + role + "]");
-
         if("INVALID".equals(role)) return null;
 
         return Map.of("role", role, "name", name);
